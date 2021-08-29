@@ -91,11 +91,9 @@
 
         <div class="body">
             <div class="imgsilde">
-                <img src="<%=contextPath %>/<%=at.getFilePath() + at.getChangeName()%>" class="img1" width="1200px"
-                     height="235px">
-
+                <img th:src="@{/images/slide.png}" class="img1" width="1200px" height="235px">
             </div>
-            <div th:if="${loginMember.memCode == 1}">
+            <div th:if="${loginMember != null and loginMember.memCode == 1}">
                 <button onclick="location.href='<%=contextPath%>/bannerUpdateForm.main'" class="banner">배너 수정</button>
             </div>
             <br><br><br><br>
@@ -105,20 +103,13 @@
                 </div>
                 <div class="careingimg">
 
-                    <%if(list.isEmpty()) {%>
-                    조회된 결과가 없습니다
-                    <%} else { %>
-                    <%for(Animal a : list) {%>
                     <div class="animalimg">
                         <div class="pet" style="text-align: center;">
                             <a href="<%=contextPath%>/detail.ao?ano=<%=a.getAnNo()%>"><img
                                     src="<%=contextPath%>/<%=a.getFilePath()%>/<%=a.getChangeName()%>"
                                     class="img-thumbnail" alt="Cinque Terre"></a><br>
-                            <%=a.getAnTitle() %>
                         </div>
                     </div>
-                    <%} %>
-                    <%} %>
 
 
                 </div>
@@ -136,20 +127,15 @@
                 </div>
                 <div class="careingimg">
 
-                    <%if(list1.isEmpty()) {%>
-                    조회된 결과가 없습니다
-                    <%} else { %>
-                    <%for(Adopt a1 : list1) {%>
+
                     <div class="animalimg">
                         <div class="pet" style="text-align: center;">
                             <a href="<%=contextPath%>/detail.ad?ano=<%=a1.getAdoptNo()%>"><img
                                     src="<%=contextPath%>/<%=a1.getFilePath()%>/<%=a1.getChangeName()%>"
                                     class="img-thumbnail" alt="Cinque Terre"></a><br>
-                            <%=a1.getAdoptTitle() %>
                         </div>
                     </div>
-                    <%} %>
-                    <%} %>
+
 
                 </div>
                 <div class="more" align="right">

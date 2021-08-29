@@ -189,25 +189,27 @@
 
     <div class="on">
 
-        <image onclick="location.href='<%=contextPath%>'" src="resources/static/images/mainLogo.png" width="558px" height="120px" class="mainLogo" />
+        <image onclick="location.href='/'" th:src="@{/images/mainLogo.png}" width="558px" height="120px" class="mainLogo" />
 
-            <div class="login" align="center" ">
-                <form action="/login.me" id="loginform" method="POST">
+            <div class="login" align="center">
+                <!-- 로그인 하지 않은 경우 -->
+                <th:block th:if="${loginMember} == null">
+                    <form action="/login.me" id="loginform" method="POST">
 
-                    <div class="id_pwd">
-                        <input type="text" class="id" placeholder="아이디" name="memId" required><br>
-                        <input type="password" class="pwd" placeholder="비밀번호" name="memPwd" required>
-                    </div>
+                        <div class="id_pwd">
+                            <input type="text" class="id" placeholder="아이디" name="memId" required><br>
+                            <input type="password" class="pwd" placeholder="비밀번호" name="memPwd" required>
+                        </div>
 
-                    <div class="loginbtn">
-                        <input type="submit" value="login">
-                    </div>
+                        <div class="loginbtn">
+                            <input type="submit" value="login">
+                        </div>
 
-                </form>
-                <a href = "<%=contextPath%>/searchIdPwd.me" id="searchMem" style="font-style: normal; text-decoration: none; color: black;" class="find">ID/PW 찾기</a> |
-                <a href = "<%=contextPath%>/joinChooseForm.me" id="enrollMem" style="font-style: normal; text-decoration: none; color: black;" class="find">회원가입</a>
+                    </form>
+                    <a href = "<%=contextPath%>/searchIdPwd.me" id="searchMem" style="font-style: normal; text-decoration: none; color: black;" class="find">ID/PW 찾기</a> |
+                    <a href = "<%=contextPath%>/joinChooseForm.me" id="enrollMem" style="font-style: normal; text-decoration: none; color: black;" class="find">회원가입</a>
+                </th:block>
             </div>
-
 
             <script>
 
@@ -220,27 +222,31 @@
                 }
             </script>
 
-            </div>
-            <div th:if="${loginUser != null}">
+        <!-- 로그인 한 경우 -->
+        <div class="login" align="center">
+            <th:block th:unless="${loginMember == null}">
                 <div id="user-info">
-                    <b><%=loginUser.getMemName() %>님</b>의 방문을 환영합니다. <br><br>
-                    <div align="center" th:if="${loginMember.memCode == 1}">
-                        <a href="<%= contextPath %>/list.me?currentPage=1">통합관리</a> <%}else{ %>
-                        <a href="<%= contextPath %>/myPage.me">마이페이지</a><%} %>
+                    <b>[[${loginMember.memName}]]님</b>의 방문을 환영합니다. <br><br>
+                    <div align="center">
+                        <th:block th:if="${loginMember.memCode == 1}">
+                            <a href="<%= contextPath %>/list.me?currentPage=1">통합관리</a>
+                        </th:block>
+                        <th:block th:unless="${loginMember.memCode == 1}">
+                            <a href="<%= contextPath %>/myPage.me">마이페이지</a>
+                        </th:block>
                         <a href="<%= contextPath %>/logout.me">로그아웃</a>
                     </div>
                 </div>
-            </div>
+            </th:block>
+        </div>
+
     </div>
 
     <div class="navi">
         <ul id="navi1" >
             <li><a href="<%=contextPath%>/Main.intro">코니멀 소개</a></li>
-            <% if(memcode==1){ %>
             <li><a href="<%=contextPath%>/Main.sh?currentPage=1">보호소</a></li>
-            <%} else { %>
             <li><a href="<%=contextPath%>/list.sh?currentPage=1">보호소</a></li>
-            <%} %>
             <li><a href="">입양문의</a>
                 <ul>
                     <li><a href="<%=contextPath%>/list.dog?currentPage=1">보호중인 동물</a></li>
@@ -258,11 +264,8 @@
             <li><a href="">후원 &amp; 자원봉사</a>
                 <ul>
                     <li><a href="<%=contextPath%>/list.vo?currentPage=1">자원봉사</a></li>
-                    <% if(memcode==1){ %>
                     <li><a href="<%=contextPath%>/Main.do?currentPage=1">후원</a></li>
-                    <%} else { %>
                     <li><a href="<%=contextPath%>/list.do?currentPage=1">후원</a></li>
-                    <%} %>
                 </ul>
             </li>
             <li><a href="">커뮤니티</a>
@@ -274,6 +277,7 @@
             </li>
         </ul>
     </div>
+
     <!-- 신고버튼 클릭시 보여질 Modal -->
     <div class="modal" id="reportForm">
         <div class="modal-dialog">
