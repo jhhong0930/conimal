@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="memberMapper">
+
+    <resultMap id="member" type="com.kh.conimal.member.model.vo.Member">
+        <result column="mem_no" property="memNo" />
+        <result column="mem_id" property="memId" />
+        <result column="mem_pwd" property="memPwd" />
+        <result column="mem_name" property="memName" />
+        <result column="enroll_date" property="enrollDate" />
+        <result column="mem_code" property="memCode" />
+    </resultMap>
+
+    <select id="loginMember" resultMap="member">
+        select * from member
+         where mem_id = #{memId} and mem_pwd = #{memPwd}
+    </select>
+
+</mapper>
