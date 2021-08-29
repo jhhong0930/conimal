@@ -229,7 +229,7 @@
                     <b>[[${loginMember.memName}]]님</b>의 방문을 환영합니다. <br><br>
                     <div align="center">
                         <th:block th:if="${loginMember.memCode == 1}">
-                            <a href="<%= contextPath %>/list.me?currentPage=1">통합관리</a>
+                            <a href="/list.me">통합관리</a>
                         </th:block>
                         <th:block th:unless="${loginMember.memCode == 1}">
                             <a href="<%= contextPath %>/myPage.me">마이페이지</a>

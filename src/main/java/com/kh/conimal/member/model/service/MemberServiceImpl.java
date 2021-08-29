@@ -67,13 +67,11 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public int selectListCount() {
-        return 0;
+        return dao.selectListCount(session);
     }
 
     @Override
-    public ArrayList<Member> selectMemberList() {
-        return null;
-    }
+    public ArrayList<Member> selectMemberList() { return dao.selectMemberList(session); }
 
     @Override
     public ArrayList<Member> searchMemberList(String keyword) {
