@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<th:block th:fragment="setContent(content)">
+<th:block th:replace="~{/fragment/layout :: setContent(~{this::content})}">
 <th:block th:fragment="content">
 <head>
 <style>
@@ -51,10 +51,6 @@
 
         <div id=list-area class=table-responsive-sm>
             <table border="1" class="list-area table table-bordered" align="center">
-
-                <tr>
-                    <td colspan="6">조회된 회원이 없습니다.</td>
-                </tr>
                 <thead class="thead-light text-center">
                     <tr>
                         <th>No</th>
@@ -66,28 +62,16 @@
                     <tr>
                 </thead>
                 <tbody class="text-center">
-                    <% for (Member m : list) { %>
-                    <tr>
-                        <td><%=m.getMemNo()%></td>
-                        <td>
-                            <% if(m.getMemCode() == 1){ %>
-                            관리자
-                            <% }else if(m.getMemCode() == 2){ %>
-                            보호소
-                            <% }else{ %>
-                            일반회원
-                            <% } %>
-                        </td>
-                        <td><%=m.getMemId()%></td>
-                        <td><%=m.getMemName()%></td>
-                        <td>
-                            <%if(m.getEmail()!=null){%>
-                            <%=m.getEmail() %>
-                            <%}else{ %>
-
-                            <%} %>
-                        </td>
-                        <td><%=m.getEnrollDate()%></td>
+                    <tr th:if="${#lists.isEmpty(mList)}">
+                        <td colspan="6">조회된 회원이 없습니다.</td>
+                    </tr>
+                    <tr th:each="m : ${mList}">
+                        <td th:text="${m.memNo}"></td>
+                        <td th:text="${m.memCode}"></td>
+                        <td th:text="${m.memId}"></td>
+                        <td th:text="${m.memName}"></td>
+                        <td th:text="${m.email}"></td>
+                        <td th:text="${m.enrollDate}"></td>
                     </tr>
                 </tbody>
             </table>
